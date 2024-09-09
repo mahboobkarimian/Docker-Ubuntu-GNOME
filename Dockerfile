@@ -39,7 +39,7 @@ COPY docker-entrypoint.sh /
 RUN pip install -r requirements.txt --break-system-packages
 
 WORKDIR /home/ubuntu/
-wget -O Firefox.tar.bz2 "https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US"
+RUN wget -O Firefox.tar.bz2 "https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US"
 
 EXPOSE 3389
 
