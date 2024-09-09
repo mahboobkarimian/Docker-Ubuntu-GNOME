@@ -17,7 +17,7 @@ export XDG_CURRENT_DESKTOP=ubuntu:GNOME\\n\
 export XDG_CONFIG_DIRS=/etc/xdg/xdg-ubuntu:/etc/xdg\\n\
 " > ~/.xsessionrc' /etc/xrdp/startwm.sh
 RUN apt-get install -y '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev libxcb-util1
-
+RUN apt-get install -y systemd systemd-sysv dbus dbus-user-session
 RUN apt-get install -y libgl1-mesa-dev libdbus-1-3
 RUN apt-get install -y python3
 RUN apt-get install -y cmake
@@ -35,6 +35,7 @@ RUN apt install -y \
     guvcview python-is-python3 bc v4l-utils guvcview
     
 COPY requirements.txt /
+COPY docker-entrypoint.sh /
 RUN pip install -r requirements.txt --break-system-packages
 
 WORKDIR /home/ubuntu/
@@ -43,3 +44,4 @@ wget -O Firefox.tar.bz2 "https://download.mozilla.org/?product=firefox-latest&os
 EXPOSE 3389
 
 CMD service dbus start; /usr/lib/systemd/systemd-logind & service xrdp start ; /bin/bash
+ENTRYPOINT ["/docker-entrypoint.sh"]
