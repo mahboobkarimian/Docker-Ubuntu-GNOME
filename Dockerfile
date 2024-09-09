@@ -4,8 +4,10 @@ RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y ubuntu-desktop d
 
 RUN rm /run/reboot-required*
 
-RUN useradd -m ubuntu -p $(openssl passwd ubuntu)
-RUN usermod -aG sudo ubuntu
+RUN useradd -m user1 -p $(openssl passwd user1)
+RUN usermod -aG sudo user1
+
+RUN echo "root:root" | chpasswd
 
 RUN apt install -y xrdp
 RUN adduser xrdp ssl-cert
@@ -26,6 +28,7 @@ RUN apt-get install -y iputils-ping
 RUN apt-get install -y sudo
 RUN apt-get install -y nmap
 RUN apt-get install -y pip
+RUN apt-get install -y wireguard
 
 RUN apt install -y \
     build-essential flex bison \
@@ -34,12 +37,13 @@ RUN apt install -y \
     python3-pip cmake git iputils-ping net-tools dwarves \
     guvcview python-is-python3 bc v4l-utils guvcview
     
-COPY requirements.txt /
-COPY docker-entrypoint.sh /
-RUN pip install -r requirements.txt --break-system-packages
 
-WORKDIR /home/ubuntu/
+WORKDIR /home/user1/
 RUN wget -O Firefox.tar.bz2 "https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US"
+
+## Systemd deploy
+COPY docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
 
 EXPOSE 3389
 
