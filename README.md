@@ -1,5 +1,5 @@
 # Docker-Ubuntu-GNOME
-Full ubuntu desktop with GUI running on docker
+Full latest ubuntu desktop with GUI running on docker
 
 ## Build
 `docker build -t ubuntudesktop .`
