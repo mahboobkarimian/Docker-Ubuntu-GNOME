@@ -37,6 +37,9 @@ RUN apt install -y \
 COPY requirements.txt /
 RUN pip install -r requirements.txt --break-system-packages
 
+WORKDIR /home/ubuntu/
+wget -O Firefox.tar.bz2 "https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US"
+
 EXPOSE 3389
 
 CMD service dbus start; /usr/lib/systemd/systemd-logind & service xrdp start ; /bin/bash
