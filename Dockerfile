@@ -4,8 +4,8 @@ RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y ubuntu-desktop d
 
 RUN rm /run/reboot-required*
 
-RUN useradd -m James -p $(openssl passwd semaj)
-RUN usermod -aG sudo James
+RUN useradd -m ubuntu -p $(openssl passwd ubuntu)
+RUN usermod -aG sudo ubuntu
 
 RUN apt install -y xrdp
 RUN adduser xrdp ssl-cert
